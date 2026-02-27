@@ -19,15 +19,9 @@ if (isRequest && !isResponse) {
     // --- HANDLE REQUEST ---
     let body = $request.body;
     if (body) {
-        try {
-            let obj = JSON.parse(body);
-            if (obj.deviceId !== undefined) {
-                obj.deviceId = generateUUID();
-                body = JSON.stringify(obj);
-            }
-        } catch (e) {
-            console.log("Error parsing request body: " + e.message);
-        }
+        // Thay thế mọi chuỗi dạng "deviceId":"<giá trị cũ>" thành giá trị mới
+        // Hỗ trợ cả khoảng trắng nếu có: "deviceId" : "..."
+        body = body.replace(/"deviceId"\s*:\s*"[^"]+"/g, '"deviceId":"' + generateUUID() + '"');
     }
     $done({ body: body });
 } else if (isResponse) {
